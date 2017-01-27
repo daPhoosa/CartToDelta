@@ -49,33 +49,62 @@
       C_towerY =  armRadius;
       
       armLengthSq = armLength * armLength;
+      
+      minArmHeightSq = square( 0.258819f * armLength );  // sin(15deg) * armLength
    }
    
    
-   void CartToDelta::input(const float & x, const float & y, const float & z)
+   void CartToDelta::input( const float & x, const float & y, const float & z )
    {
       // an axis that is asked to go to an unreachable location will fail silently and remain at its old location
 
       float temp;
       
-      temp = computeDeltaPos(A_TowerX, A_TowerY, x, y, z);
-      if(temp > 0.0f)
+      temp = computeDeltaPos( A_TowerX, A_TowerY, x, y, z );
+      if( temp > 0.0f )
       {
          A_position = temp;
       }
 
-      temp = computeDeltaPos(B_TowerX, B_TowerY, x, y, z);
-      if(temp > 0.0f)
+      temp = computeDeltaPos( B_TowerX, B_TowerY, x, y, z );
+      if( temp > 0.0f )
       {
          B_position = temp;
       }
 
-      temp = computeDeltaPos(C_TowerX, C_TowerY, x, y, z);
-      if(temp > 0.0f)
+      temp = computeDeltaPos( C_TowerX, C_TowerY, x, y, z );
+      if( temp > 0.0f )
       {
          C_position = temp;
       }
 
+   }
+
+   
+   float CartToDelta::computeDeltaPos( const float & x1, const float & y1, const float & x2, const float & y2, const float & z )
+   {
+      static float dx_Sq, dy_Sq, dz_Sq;
+      
+      dx_Sq = square( x1 - x2 );
+      
+      dy_Sq = square( y1 - y2 );
+      
+      dz_Sq = armLengthSq - (dx_Sq + dy_Sq);
+      
+      if( dz_Sq > minArmHeightSq )
+      {
+         return sqrt(dz_Sq) + z;
+      }
+      else
+      {
+         return -1.0f;  // failure
+      }
+   }
+
+   
+   float CartToDelta::square( float x )
+   {
+      return x * x;
    }
    
    

@@ -39,36 +39,15 @@
       private:
       
       float computeDeltaPos(const float & x1, const float & y1, const float & x2, const float & y2, const float & z);
+      float square(float x);
       
-      float A_TowerX, A_towerY, B_TowerX, B_towerY, C_TowerX, C_towerY, armLengthSq;
+      float A_TowerX, A_towerY, B_TowerX, B_towerY, C_TowerX, C_towerY;
+      float minArmHeightSq, armLengthSq;
       float A_position, B_position, C_position;
       
    }
 
    
-   // must by in header file to allow inline declaration
-   inline float CartToDelta::computeDeltaPos(const float & x1, const float & y1, const float & x2, const float & y2, const float & z)
-   {
-      static float dx_Sq, dy_Sq, dz_Sq;
-      
-      dx_Sq = x1 - x2;
-      dx_Sq *= dx_Sq;
-      
-      dy_Sq = y1 - y2;
-      dy_Sq *= dy_Sq;
-      
-      dz_Sq = armLengthSq - (dx_Sq + dy_Sq);
-      
-      if( dz_Sq > 0.0f )
-      {
-         return sqrt(dz_Sq) + z + 0.5f;
-      }
-      else
-      {
-         return -1.0f;  // failure
-      }
-
-   }
 
    
 #endif
