@@ -27,25 +27,26 @@
    {
       public:
       
-      CartToDelta(float armRadius, float armLength);
-      
-      void input(const float & x, const float & y, const float & z);
-      
-      float A();
-      float B();
-      float C();
-      
-      
+         CartToDelta(float armRadius, float armLength);
+         ~CartToDelta();
+         
+         void input(const float & x, const float & y, const float & z);
+         
+         float A();
+         float B();
+         float C();
+
+         
       private:
       
-      float computeDeltaPos(const float & x1, const float & y1, const float & x2, const float & y2, const float & z);
-      float square(float x);
+         float computeDeltaPos(const float & x1, const float & y1, const float & x2, const float & y2, const float & z);
+         float square(float x);
+         
+         float A_TowerX, A_TowerY, B_TowerX, B_TowerY, C_TowerX, C_TowerY;
+         float minArmHeightSq, armLengthSq;
+         float A_position, B_position, C_position;
       
-      float A_TowerX, A_towerY, B_TowerX, B_towerY, C_TowerX, C_towerY;
-      float minArmHeightSq, armLengthSq;
-      float A_position, B_position, C_position;
-      
-   }
+   };
 
    
 
